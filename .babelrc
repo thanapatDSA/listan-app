@@ -1,4 +1,4 @@
 {
-  "presets": ["@babel/preset-env", "babel-preset-react-app"],
+  "presets": [["react-app"]],
   "plugins": ["@babel/plugin-proposal-optional-chaining"]
 }
