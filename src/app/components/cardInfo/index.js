@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
-import {
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Typography,
-  Grow
-} from '@material-ui/core'
+import Grow from '@material-ui/core/Grow'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import LinesEllipsis from 'react-lines-ellipsis'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles((theme) => {
@@ -128,9 +126,9 @@ ReviewCard.defaultProps = {
 }
 
 // eslint-disable-next-line react/no-typos
-ReviewCard.PropTypes = {
-  cardData: PropTypes.func,
-  expandCard: PropTypes.func
+ReviewCard.propTypes = {
+  cardData: propTypes.func,
+  expandCard: propTypes.func
 }
 
 export default ReviewCard

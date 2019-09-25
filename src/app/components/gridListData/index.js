@@ -1,16 +1,14 @@
 import React from 'react'
-import {
-  GridList,
-  GridListTile,
-  GridListTileBar,
-  IconButton,
-  makeStyles,
-  Grow,
-  CircularProgress
-} from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import IconButton from '@material-ui/core/IconButton'
+import Grow from '@material-ui/core/Grow'
+import { makeStyles } from '@material-ui/core'
 import InfoIcon from '@material-ui/icons/Info'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,10 +93,10 @@ GridListData.defaultProps = {
 }
 
 // eslint-disable-next-line react/no-typos
-GridListData.PropTypes = {
-  data: PropTypes.func,
-  setCardData: PropTypes.func,
-  expandCard: PropTypes.func
+GridListData.propTypes = {
+  data: propTypes.func,
+  setCardData: propTypes.func,
+  expandCard: propTypes.func
 }
 
 export default GridListData
