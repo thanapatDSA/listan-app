@@ -4,13 +4,13 @@ import { makeStyles } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import MiniDrawer from '../components/layout/sidemenu'
 import GridListData from '../components/gridListData'
-import { apiGetSeasonLater } from '../api/list'
+import { apiGetSeasonNow } from '../api/list'
 import ReviewCard from '../components/cardInfo'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: '#212121',
-    height: '100vh'
+    height: '110vh'
   },
   item: {
     display: 'flex',
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   containerLayout: {
     paddingTop: '5vh',
-    paddingLeft: '90px',
+    paddingLeft: '100px',
     paddingRight: '20px'
   },
   paper: {
@@ -50,7 +50,8 @@ const List = () => {
 
   const callAPIGetSeasonNow = async () => {
     setIsLoading(true)
-    const result = await apiGetSeasonLater()
+    const result = await apiGetSeasonNow()
+    console.log(result)
     setIsLoading(false)
     setData(result)
   }
@@ -61,7 +62,7 @@ const List = () => {
     <Grid className={classes.root}>
       <MiniDrawer />
       <Grid container className={classes.containerLayout} spacing={2}>
-        <Grid className={classes.item} item xs={Boolean(cardData) ? '6' : '12'}>
+        <Grid className={classes.item} item xs={Boolean(cardData) ? '7' : '12'}>
           {isLoading ? (
             <div className={classes.isLoadingContentStyls}>
               <CircularProgress size={80} className={classes.progress} />
@@ -78,7 +79,7 @@ const List = () => {
           className={classes.item}
           style={{ display: Boolean(cardData) ? 'flex' : 'none' }}
           item
-          xs="6"
+          xs="5"
         >
           <ReviewCard cardData={cardData} expandCard={setexpanContent} />
         </Grid>

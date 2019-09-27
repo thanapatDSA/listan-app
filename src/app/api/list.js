@@ -18,7 +18,7 @@ export const apiGetSeasonLater = async () => {
 export const apiGetSeasonNow = async () => {
   return axios({
     method: 'get',
-    url: `${JIKAN_API}/season/`
+    url: `${JIKAN_API}/season`
   })
     .then((res) => {
       const success = res.data

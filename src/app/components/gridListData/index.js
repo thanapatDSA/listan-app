@@ -44,7 +44,7 @@ function GridListData(props) {
       cellHeight={200}
       className={classes.gridList}
       cols={4}
-      style={{ minHeight: '100vh' }}
+      style={{ minHeight: '95vh' }}
     >
       {data.anime?.map((tile) => (
         <Grow in={expandCard} timeout="auto">

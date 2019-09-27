@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import clsx from 'clsx'
-import Grow from '@material-ui/core/Grow'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -12,17 +10,17 @@ import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import LinesEllipsis from 'react-lines-ellipsis'
+import LinesEllipsisLoose from 'react-lines-ellipsis/lib/loose'
 import propTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
+import Chip from '@material-ui/core/Chip'
+import AirDateTime, { AirTimeZone } from '../../helpers/airtime'
 
 const useStyles = makeStyles((theme) => {
   return {
     media: {
-      height: '316px',
-      width: '225px',
-      paddingTop: '56.25%', // 16:9
+      height: '100%',
+      width: '100%',
       margin: 'auto'
     },
     expand: {
@@ -37,86 +35,170 @@ const useStyles = makeStyles((theme) => {
     },
     avatar: {
       backgroundColor: red[500]
+    },
+    chip: {
+      margin: theme.spacing(1)
     }
   }
 })
 
 function ReviewCard(props) {
-  const { cardData, expandCard } = props
+  const { cardData } = props
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(false)
 
-  function handleExpandClick() {
-    setExpanded(!expanded)
-    expandCard(!expanded)
-  }
-
+  console.log(cardData)
   return (
-    <Grid container direction="row" spacing={4}>
-      <Card
-        style={{
-          minWidth: 345,
-          maxWidth: !expanded ? '60vh' : '150vh',
-          minHeight: '80vh',
-          display: 'flex'
-        }}
-      >
-        <Grid container direction="column" xs={expanded ? 6 : 12}>
+    <Card
+      style={{
+        height: '95vh',
+        display: 'flex'
+      }}
+    >
+      <Grid container spacing={1}>
+        <Grid item xs={12} style={{ height: '5vh' }}>
           <CardHeader title={cardData.title} subheader={cardData.author} />
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          style={{
+            height: '60vh',
+            paddingLeft: '20px',
+            maxHeight: '320px',
+            maxWidth: '255px'
+          }}
+        >
           <CardMedia
             className={classes.media}
             image={cardData.image_url}
             title={cardData.title}
           />
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          style={{
+            height: '60vh',
+            maxHeight: '320px'
+          }}
+        >
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              <LinesEllipsis text={cardData.synopsis} maxLine={expanded ? 10 : 1} />
+              Type :{' '}
+              <Chip
+                size="small"
+                variant="outlined"
+                label={cardData.type}
+                classes={classes.chip}
+              />
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Episodes:{' '}
+              <Chip
+                size="small"
+                variant="outlined"
+                label={!!cardData.episodes ? cardData.episodes : '-'}
+                classes={classes.chip}
+              />
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Airing Start:{' '}
+              <Chip
+                size="small"
+                variant="outlined"
+                label={
+                  !!cardData.airing_start ? (
+                    <AirDateTime dateString={cardData.airing_start} />
+                  ) : (
+                    '-'
+                  )
+                }
+                classes={classes.chip}
+              />
+              {!!cardData.airing_start ? (
+                <Chip
+                  size="small"
+                  variant="outlined"
+                  label={<AirTimeZone dateString={cardData.airing_start} />}
+                  classes={classes.chip}
+                />
+              ) : (
+                <div />
+              )}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Source:{' '}
+              <Chip
+                size="small"
+                variant="outlined"
+                label={!!cardData.source ? cardData.source : '-'}
+                classes={classes.chip}
+              />
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Score:{' '}
+              <Chip
+                size="small"
+                variant="outlined"
+                label={!!cardData.score ? cardData.score : '-'}
+                classes={classes.chip}
+              />
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Producers:{' '}
+              {!!cardData.producers ? (
+                cardData.producers.map((producer) => {
+                  return (
+                    <Chip
+                      size="small"
+                      variant="outlined"
+                      label={!!producer.name ? producer.name : '-'}
+                      classes={classes.chip}
+                    />
+                  )
+                })
+              ) : (
+                <div />
+              )}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Genres:{' '}
+              {!!cardData.genres ? (
+                cardData.genres.map((genres) => {
+                  return (
+                    <Chip
+                      size="small"
+                      variant="outlined"
+                      label={!!genres.name ? genres.name : '-'}
+                      classes={classes.chip}
+                    />
+                  )
+                })
+              ) : (
+                <div />
+              )}
             </Typography>
           </CardContent>
-          <CardActions disableSpacing>
+        </Grid>
+        <Grid item xs={12}>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <LinesEllipsisLoose text={cardData.synopsis} maxLine="6" lineHeight="16" />
+            </Typography>
+          </CardContent>
+        </Grid>
+        <Grid item xs={12}>
+          <CardActions disableSpacing style={{ position: 'absolute', bottom: 0 }}>
             <IconButton aria-label="add to favorites">
               <FavoriteIcon />
             </IconButton>
             <IconButton aria-label="share">
               <ShareIcon />
             </IconButton>
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
           </CardActions>
         </Grid>
-        <Grid container direction="column" xs={6}>
-          <Grow in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Method:</Typography>
-              <Typography paragraph>
-                1/2 cup of the broth in a pot until simmering, add saffron and set aside
-                for 10 minutes.
-              </Typography>
-              <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                large plate and set aside, leaving chicken and chorizo in the pan. Add
-                pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                stirring often until thickened and fragrant, about 10 minutes. Add saffron
-                broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-              </Typography>
-              <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then serve.
-              </Typography>
-            </CardContent>
-          </Grow>
-        </Grid>
-      </Card>
-    </Grid>
+      </Grid>
+    </Card>
   )
 }
 
